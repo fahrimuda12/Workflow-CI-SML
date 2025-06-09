@@ -3,8 +3,6 @@ import mlflow
 import numpy as np 
 import mlflow.sklearn
 import dagshub
-import joblib
-from dagshub import dagshub_logger
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
@@ -106,7 +104,8 @@ if __name__ == "__main__":
 
         # Log final model
         mlflow.sklearn.log_model(
-            sk_model=clf, 
+            sk_model=clf,
             artifact_path="model_heart_disease_failure",
-            input_example=input_example
+            input_example=input_example,
+            signature=signature
         )

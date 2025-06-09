@@ -29,30 +29,37 @@ jobs:
       - uses: actions/checkout@v3
 
 
-      - name: Set up Conda
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          auto-update-conda: true
-          activate-environment: mlflow-env
-          environment-file: MLProject/conda.yaml
-          auto-activate-base: false
-
-      # # Setup Python 3.12.7
-      # - name: Set up Python 3.12.7
-      #   uses: actions/setup-python@v4
+      # - name: Set up Conda
+      #   uses: conda-incubator/setup-miniconda@v2
       #   with:
-      #     python-version: "3.12.7"
+      #     auto-update-conda: true
+      #     activate-environment: mlflow-env
+      #     environment-file: MLProject/conda.yaml
+      #     auto-activate-base: false
+
+      # # Install dependencies including mlflow
+      # - name: Install dependencies
+      #   run: |
+      #     source $(conda info --base)/etc/profile.d/conda.sh
+      #     conda activate mlflow-env
+          # pip install mlflow dagshub
+
+      # Setup Python 3.12.7
+      - name: Set up Python 3.12.7
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12.7"
       
       # Check Env Variables
       - name: Check Env
         run: |
           echo $CSV_URL
 
-      # # Install mlflow
-      # - name: Install dependencies
-      #   run: |
-      #     python -m pip install --upgrade pip
-      #     pip install mlflow dagshub
+      # Install Depdecnies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r MLProject/requirements.txt
           
       # Run as a mlflow project
       - name: Run mlflow project

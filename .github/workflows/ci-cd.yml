@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  CSV_URL: "Workflow-CI/MLProject/dataset/failure_heart_preprocessing.csv"
+  CSV_URL: "MLProject/dataset/failure_heart_preprocessing.csv"
   TARGET_VAR: "HeartDisease"
   EXPERIMENT_NAME: "CI/CD Heart Disease Model"
 
@@ -34,7 +34,7 @@ jobs:
         with:
           auto-update-conda: true
           activate-environment: mlflow-env
-          environment-file: Workflow-CI/MLProject/conda.yaml
+          environment-file: MLProject/conda.yaml
           auto-activate-base: false
 
       # # Setup Python 3.12.7
@@ -57,7 +57,7 @@ jobs:
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
-          cd Workflow-CI/MLProject
+          cd MLProject
           mlflow run . --env-manager=conda
       
       # Save models to GitHub Repository

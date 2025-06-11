@@ -89,6 +89,7 @@ jobs:
           git add mlruns/
           git commit -m "Save mlruns from CI run"
           git push origin master
+          
       # Get latest run_id
       - name: Get latest MLflow run_id
         run: |

@@ -120,7 +120,8 @@ jobs:
       - name: Build Docker Model
         shell: bash -l {0}
         run: |
-          mlflow models build-docker --model-uri "runs:/${{ steps.get_run_id.outputs.run_id }}/model_heart_disease_failure" --name "heart_disease" 
+          mlflow artifacts download --run-id dc86dddfa4174708be80d5f70feba763 --artifact-path model_heart_disease_failure -d ./model_local
+          mlflow models build-docker --model-uri ./model_local --name "heart_disease"
 
       # Login to Docker Hub
       - name: Log in to Docker Hub

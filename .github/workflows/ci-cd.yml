@@ -68,14 +68,27 @@ jobs:
           cd MLProject 
           mlflow run . --experiment-name "model_heart_disease_failure"
       
-      # Save models to GitHub Repository
-      - name: Save mlruns to repo
+      - name: List generated artifacts
+        shell: bash -l {0}
         run: |
-          git config --global user.name ${{ secrets.username }}
-          git config --global user.email ${{ secrets.email }}
-          git add .
-          git commit -m "Save mlruns from CI run"
-          git push origin master
+          echo "Generated files:"
+          find MLProject/ -name "*.pkl" -o -name "*.joblib" -o -name "mlruns" | head -20
+      
+      - name: Show MLflow runs
+        shell: bash -l {0}
+        run: |
+          cd MLProject
+          echo "MLflow runs:"
+          ls -la mlruns/ 2>/dev/null || echo "No mlruns directory found"
+
+      # # Save models to GitHub Repository
+      # - name: Save mlruns to repo
+      #   run: |
+      #     git config --global user.name ${{ secrets.username }}
+      #     git config --global user.email ${{ secrets.email }}
+      #     git add .
+      #     git commit -m "Save mlruns from CI run"
+      #     git push origin master
 
       # Get latest run_id
       - name: Get latest MLflow run_id

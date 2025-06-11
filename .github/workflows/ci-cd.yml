@@ -117,7 +117,6 @@ jobs:
       - name: Build Docker Model
         shell: bash -l {0}
         run: |
-          conda activate heart_disease_env
           mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "heart_disease" 
 
       # Login to Docker Hub

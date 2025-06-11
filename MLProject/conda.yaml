@@ -1,14 +1,15 @@
+name: heart_disease_env
 channels:
-- conda-forge
+  - conda-forge
+  - defaults
 dependencies:
-- python=3.11.9
-- pip<=24.0
-- pip:
-  - mlflow==2.22.0
-  - cloudpickle==3.1.1
-  - numpy==2.2.6
-  - pandas==2.2.3
-  - scikit-learn==1.6.1
-  - scipy==1.15.3
-  - dagshub==0.5.10
-name: mlflow-env
+  - python=3.11.9
+  - pip<=24.0
+  - pip:
+    - mlflow==2.22.0
+    - cloudpickle==3.1.1
+    - numpy==2.2.6
+    - pandas==2.2.3
+    - scikit-learn==1.6.1
+    - scipy==1.15.3
+    - dagshub==0.5.10

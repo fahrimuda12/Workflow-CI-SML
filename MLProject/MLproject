@@ -5,9 +5,6 @@ conda_env: conda.yaml
 entry_points:
   main:
     parameters:
-      batch_size:
-        type: int
-        default: 60
       data_path:
         type: str
         default: "dataset/failure_heart_preprocessing.csv"

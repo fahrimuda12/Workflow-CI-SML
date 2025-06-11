@@ -112,7 +112,12 @@ jobs:
           else:
               print('No runs found.')
           "
-          
+      # verifikasi run id
+      - name: Check RUN_ID
+        shell: bash -l {0}
+        run: |
+          echo "RUN_ID=${{ env.RUN_ID }}" 
+
       # Build Docker Model
       - name: Build Docker Model
         shell: bash -l {0}

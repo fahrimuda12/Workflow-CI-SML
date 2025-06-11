@@ -12,8 +12,7 @@ import warnings
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
-    dagshub.init(repo_owner='fahrimuda12', repo_name='heart-disease', mlflow=True, 
-                 token=os.environ.get("DAGSHUB_TOKEN"))
+    dagshub.init(repo_owner='fahrimuda12', repo_name='heart-disease', mlflow=True)
 
     # Set MLflow Tracking URI
     # mlflow.set_tracking_uri("http://127.0.0.1:5000/")

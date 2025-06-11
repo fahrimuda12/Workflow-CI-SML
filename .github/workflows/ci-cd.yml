@@ -72,26 +72,27 @@ jobs:
         shell: bash -l {0}
         run: |
           echo "Generated files:"
-          find MLProject/ -name "*.pkl" -o -name "*.joblib" -o -name "mlruns" | head -20
+          find MLProject/ -name "*.pkl" -o -name "*.joblib" -o -name "model_heart_disease_failure" | head -20
       
       - name: Show MLflow runs
         shell: bash -l {0}
         run: |
           cd MLProject
           echo "MLflow runs:"
-          ls -la mlruns/ 2>/dev/null || echo "No mlruns directory found"
+          ls -la model_heart_disease_failure/ 2>/dev/null || echo "No model_heart_disease_failure directory found"
 
       # # Save models to GitHub Repository
-      # - name: Save mlruns to repo
+      # - name: Save model_heart_disease_failure to repo
       #   run: |
       #     git config --global user.name ${{ secrets.username }}
       #     git config --global user.email ${{ secrets.email }}
       #     git add MLProject/model_heart_disease_failure/
-      #     git commit -m "Save mlruns from CI run"
+      #     git commit -m "Save model_heart_disease_failure from CI run"
       #     git push origin master
 
       # Get latest run_id
       - name: Get latest MLflow run_id
+        shell: bash -l {0}
         run: |
           RUN_ID=$(ls -td MLProject/model_heart_disease_failure/0/*/ | head -n 1 | cut -d'/' -f3)
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
@@ -100,6 +101,7 @@ jobs:
       # Build Docker Model
       - name: Build Docker Model
         run: |
+          conda activate heart_disease_env
           mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "heart_disease" 
 
       # Login to Docker Hub
@@ -111,10 +113,12 @@ jobs:
 
       # Tag the Docker image
       - name: Tag Docker Image
+        shell: bash -l {0}
         run: |
           docker tag heart_disease ${{ secrets.DOCKER_HUB_USERNAME }}/heart_disease:latest
 
       # Push Docker image to Docker Hub
       - name: Push Docker Image
+        shell: bash -l {0}
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/heart_disease:latest

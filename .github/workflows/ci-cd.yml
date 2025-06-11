@@ -86,10 +86,10 @@ jobs:
         run: |
           git config --global user.name ${{ secrets.username }}
           git config --global user.email ${{ secrets.email }}
-          git add mlruns/
+          git add model_heart_disease_failure/
           git commit -m "Save mlruns from CI run"
           git push origin master
-          
+
       # Get latest run_id
       - name: Get latest MLflow run_id
         run: |

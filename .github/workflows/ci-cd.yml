@@ -81,13 +81,6 @@ jobs:
           echo "MLflow runs:"
           ls -la mlruns/ 2>/dev/null || echo "No mlruns directory found"
 
-      # Get latest run_id
-      - name: Get latest MLflow run_id
-        run: |
-          RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
-          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-          echo "Latest run_id: $RUN_ID"
-
       # Save models to GitHub Repository
       - name: Save mlruns to repo
         run: |
@@ -96,6 +89,13 @@ jobs:
           git add MLProject/model_heart_disease_failure/
           git commit -m "Save mlruns from CI run"
           git push origin master
+
+      # Get latest run_id
+      - name: Get latest MLflow run_id
+        run: |
+          RUN_ID=$(ls -td MLProject/model_heart_disease_failure/0/*/ | head -n 1 | cut -d'/' -f3)
+          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+          echo "Latest run_id: $RUN_ID"
           
       # Build Docker Model
       - name: Build Docker Model

@@ -92,12 +92,26 @@ jobs:
       #     git push origin master
 
       # Get latest run_id
-      - name: Get latest MLflow run_id
+      - name: Get latest MLflow run_id via Python
         shell: bash -l {0}
         run: |
-          RUN_ID=$(ls -td model_heart_disease_failure/0/*/ | head -n 1 | cut -d'/' -f3)
-          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-          echo "Latest run_id: $RUN_ID"
+          conda activate heart_disease_env
+          cd MLProject
+          python -c "
+          import mlflow
+          client = mlflow.tracking.MlflowClient()
+          runs = client.search_runs(
+              experiment_ids=[client.get_experiment_by_name('model_heart_disease_failure').experiment_id],
+              order_by=['attributes.start_time DESC'],
+              max_results=1
+          )
+          if runs:
+              print(f'RUN_ID={runs[0].info.run_id}')
+              with open('${GITHUB_ENV}', 'a') as f:
+                  f.write(f'RUN_ID={runs[0].info.run_id}\\n')
+          else:
+              print('No runs found.')
+          "
           
       # Build Docker Model
       - name: Build Docker Model

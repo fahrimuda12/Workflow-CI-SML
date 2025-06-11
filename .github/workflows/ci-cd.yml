@@ -117,6 +117,7 @@ jobs:
           echo "RUN_ID=${{ steps.get_run_id.outputs.run_id }}" 
 
       - name: Download model locally from DagsHub
+        shell: bash -l {0}
         run: |
           mlflow artifacts download \
             --run-id ${{ steps.get_run_id.outputs.run_id }} \

@@ -12,10 +12,10 @@ import warnings
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
+    # tidak bisa memakai dagshub jika dilakukan workflow CI/
     # dagshub.init(repo_owner='fahrimuda12', repo_name='heart-disease', mlflow=True)
 
     # Set MLflow Tracking URI
-    # mlflow.set_tracking_uri("http://127.0.0.1:5000/")
     mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
 
     # Nama eksperimen yang ingin dicari

@@ -12,7 +12,8 @@ import warnings
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
-    dagshub.init(repo_owner='fahrimuda12', repo_name='heart-disease', mlflow=True)
+    dagshub.init(repo_owner='fahrimuda12', repo_name='heart-disease', mlflow=True, 
+                 token=os.environ.get("DAGSHUB_TOKEN"))
 
     # Set MLflow Tracking URI
     # mlflow.set_tracking_uri("http://127.0.0.1:5000/")
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     print("Experiment ID:", experiment.experiment_id)
 
     # Memuat dataset 
-    data = pd.read_csv('./dataset/failure_heart_preprocessing.csv', sep=',')
+    data = pd.read_csv('/dataset/failure_heart_preprocessing.csv', sep=',')
 
     print(data.info())
 

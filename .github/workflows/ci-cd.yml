@@ -70,7 +70,7 @@ jobs:
         run: |
           conda activate heart_disease_env
           cd MLProject 
-          mlflow run . --experiment-name "Heart_Disease"
+          mlflow run . --experiment-name "model_heart_disease_failure"
       
       # Save models to GitHub Repository
       - name: Save mlruns to repo

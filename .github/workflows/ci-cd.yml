@@ -81,15 +81,15 @@ jobs:
           echo "MLflow runs:"
           ls -la model_heart_disease_failure/ 2>/dev/null || echo "No model_heart_disease_failure directory found"
 
-      # # Save models to GitHub Repository
-      # - name: Save model_heart_disease_failure to repo
-      #   run: |
-      #     git config --global user.name ${{ secrets.username }}
-      #     git config --global user.email ${{ secrets.email }}
-      #     cd MLProject
-      #     git add model_heart_disease_failure/
-      #     git commit -m "Save model_heart_disease_failure from CI run"
-      #     git push origin master
+      # Save models to GitHub Repository
+      - name: Save model_heart_disease_failure to repo
+        run: |
+          git config --global user.name ${{ secrets.username }}
+          git config --global user.email ${{ secrets.email }}
+          cd MLProject
+          git add ./model/*
+          git commit -m "Save model_heart_disease_failure from CI run"
+          git push origin master
 
       # Get latest run_id
       - name: Get latest MLflow run_id via Python

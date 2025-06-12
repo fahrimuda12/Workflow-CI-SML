@@ -109,5 +109,3 @@ if __name__ == "__main__":
             input_example=input_example,
             signature=signature
         )
-
-        mlflow.sklearn.save_model(clf, path="model")

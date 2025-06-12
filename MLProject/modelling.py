@@ -13,7 +13,10 @@ import warnings
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     # tidak bisa memakai dagshub jika dilakukan workflow CI/
-    # dagshub.init(repo_owner='fahrimuda12', repo_name='heart-disease', mlflow=True)
+    dagshub.init(repo_owner='fahrimuda12', repo_name='heart-disease', mlflow=True)
+
+    # Inisialisasi MLflow autolog
+    mlflow.sklearn.autolog()
 
     # Set MLflow Tracking URI
     mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
@@ -74,24 +77,9 @@ if __name__ == "__main__":
         # Inference setelah semua batch
         y_pred = clf.predict(X_test)
 
-        # Metrics
-        acc = accuracy_score(y_test, y_pred)
-        prec = precision_score(y_test, y_pred, average="macro")
-        rec = recall_score(y_test, y_pred, average="macro")
-        f1 = f1_score(y_test, y_pred, average="macro")
-        train_test_ratio = len(X_train) / len(X_test)
-
-        # Logging ke MLflow (manual)
-        mlflow.log_param("model_type", "SGDClassifier")
-        mlflow.log_param("batch_size", batch_size)
-        mlflow.log_param("online_learning", True)
-
-        mlflow.log_metric("accuracy", acc)
-        mlflow.log_metric("precision", prec)
-        mlflow.log_metric("recall", rec)
-        mlflow.log_metric("f1_score", f1)
-        mlflow.log_metric("train_test_ratio", train_test_ratio)
-        mlflow.log_metric("n_batches", n_batches)
+        # Jika ingin, bisa tambahkan evaluasi manual
+        score = clf.score(X_test, y_test)
+        print(f"Test accuracy: {score}")
 
 
         # Contoh input

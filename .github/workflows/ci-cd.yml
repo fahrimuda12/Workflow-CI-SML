@@ -81,15 +81,15 @@ jobs:
           echo "MLflow runs:"
           ls -la model_heart_disease_failure/ 2>/dev/null || echo "No model_heart_disease_failure directory found"
 
-      # Save models to GitHub Repository
-      - name: Save model to repo
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          cd MLProject
-          git add .
-          git commit -m "Save model from CI run"
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{secrets.USERNAME }}/Workflow-CI-SML.git HEAD:main
+      # # Save models to GitHub Repository
+      # - name: Save model to repo
+      #   run: |
+      #     git config user.name "github-actions[bot]"
+      #     git config user.email "github-actions[bot]@users.noreply.github.com"
+      #     cd MLProject
+      #     git add .
+      #     git commit -m "Save model from CI run"
+      #     git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{secrets.USERNAME }}/Workflow-CI-SML.git HEAD:main
 
       # Get latest run_id
       - name: Get latest MLflow run_id via Python

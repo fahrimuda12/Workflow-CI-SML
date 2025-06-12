@@ -121,12 +121,12 @@ jobs:
         run: |
           mkdir -p ./model_local
           curl -L -u "$DAGSHUB_USERNAME:$DAGSHUB_TOKEN" \
-            "https://dagshub.com/fahrimuda12/heart-disease.mlflow/artifacts/model_heart_disease_failure/${{ steps.get_run_id.outputs.run_id }}" \
-            --output ./model_local/model_artifact.zip
-          if file ./model_local/model_artifact.zip | grep -q 'Zip archive data'; then
-            unzip -o ./model_local/model_artifact.zip -d ./model_local
+            "https://dagshub.com/fahrimuda12/heart-disease.mlflow/artifacts/model_heart_disease_failure/${{ steps.get_run_id.outputs.run_id }}/artifacts/model" \
+            --output ./model_local/model.tar.gz
+          if file ./model_local/model.tar.gz | grep -q 'gzip compressed data'; then
+            tar -xzvf ./model_local/model.tar.gz -C ./model_local
           else
-            echo "Downloaded file is not a valid zip archive."
+            echo "Downloaded file is not a valid tar.gz archive."
             exit 1
           fi
       

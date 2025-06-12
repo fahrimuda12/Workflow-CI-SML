@@ -134,7 +134,8 @@ jobs:
       - name: Build Docker Model
         shell: bash -l {0}
         run: |
-          mlflow models build-docker --model-uri ./model  . --name heart_disease
+          cd MLProject
+          mlflow models build-docker --model-uri ./model_heart_disease_failure --name heart_disease
 
       # Login to Docker Hub
       - name: Log in to Docker Hub

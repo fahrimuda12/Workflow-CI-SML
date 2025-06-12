@@ -13,7 +13,7 @@ import warnings
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     # tidak bisa memakai dagshub jika dilakukan workflow CI/
-    dagshub.init(repo_owner='fahrimuda12', repo_name='heart-disease', mlflow=True)
+    # dagshub.init(repo_owner='fahrimuda12', repo_name='heart-disease', mlflow=True)
 
     # Inisialisasi MLflow autolog
     mlflow.sklearn.autolog()

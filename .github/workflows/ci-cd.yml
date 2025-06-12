@@ -90,7 +90,7 @@ jobs:
           git add ./model/*
           git add ./model_heart_disease_failure/*
           git commit -m "Save model from CI run"
-          git push origin main || echo "No changes to commit, skipping push."
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{secrets.USERNAME }}/Workflow-CI-SML.git HEAD:main
 
       # Get latest run_id
       - name: Get latest MLflow run_id via Python

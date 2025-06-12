@@ -116,25 +116,25 @@ jobs:
         run: |
           echo "RUN_ID=${{ steps.get_run_id.outputs.run_id }}" 
 
-      - name: Download model locally from DagsHub
-        shell: bash -l {0}
-        run: |
-          mkdir -p ./model_local
-          curl -L -u "$DAGSHUB_USERNAME:$DAGSHUB_TOKEN" \
-            "https://dagshub.com/fahrimuda12/heart-disease.mlflow/artifacts/model_heart_disease_failure/${{ steps.get_run_id.outputs.run_id }}/artifacts/model" \
-            --output ./model_local/model.tar.gz
-          if file ./model_local/model.tar.gz | grep -q 'gzip compressed data'; then
-            tar -xzvf ./model_local/model.tar.gz -C ./model_local
-          else
-            echo "Downloaded file is not a valid tar.gz archive."
-            exit 1
-          fi
+      # - name: Download model locally from DagsHub
+      #   shell: bash -l {0}
+      #   run: |
+      #     mkdir -p ./model_local
+      #     curl -L -u "$DAGSHUB_USERNAME:$DAGSHUB_TOKEN" \
+      #       "https://dagshub.com/fahrimuda12/heart-disease.mlflow/artifacts/model_heart_disease_failure/${{ steps.get_run_id.outputs.run_id }}/artifacts/model" \
+      #       --output ./model_local/model.tar.gz
+      #     if file ./model_local/model.tar.gz | grep -q 'gzip compressed data'; then
+      #       tar -xzvf ./model_local/model.tar.gz -C ./model_local
+      #     else
+      #       echo "Downloaded file is not a valid tar.gz archive."
+      #       exit 1
+      #     fi
       
       # Build Docker Model
       - name: Build Docker Model
         shell: bash -l {0}
         run: |
-          mlflow models build-docker --model-uri ./model_local --name heart_disease
+          mlflow models build-docker --model-uri ./model  . --name heart_disease
 
       # Login to Docker Hub
       - name: Log in to Docker Hub

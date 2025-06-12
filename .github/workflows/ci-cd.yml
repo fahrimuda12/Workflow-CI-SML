@@ -119,7 +119,11 @@ jobs:
       - name: Download model locally from DagsHub
         shell: bash -l {0}
         run: |
-          mlflow artifacts download --run-id ${{ steps.get_run_id.outputs.run_id }} --artifact-path model_heart_disease_failure --dst-path ./model_local
+          mkdir -p ./model_local
+          curl -L -u "${{ secrets.DAGSHUB_USERNAME }}:${{ secrets.DAGSHUB_TOKEN }}" \
+            "https://dagshub.com/fahrimuda12/heart-disease.mlflow/artifacts/model_heart_disease_failure/${{ steps.get_run_id.outputs.run_id }}" \
+            --output ./model_local/model_artifact.zip
+          unzip -o ./model_local/model_artifact.zip -d ./model_local
       
       # Build Docker Model
       - name: Build Docker Model
